@@ -17,6 +17,7 @@ public class NoticeService {
 	
 	@Autowired
 	private NoticeDao noticeDao; //SpringNoticeDao는 @Repository로
+	
 	public NoticeService() {
 //		noticeDao = new JdbcNoticeDao();
 	}
