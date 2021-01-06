@@ -72,13 +72,11 @@ public class NoticeController {
 	
 	//2번 방법 : id를 자동으로 가져옴
 	@RequestMapping("{id}")
-	public String detail(Model model, @PathVariable String id) {
+//	public String detail(Model model, @PathVariable String id) {
+	public String detail(@PathVariable("id") Integer id, Model model) {
 
-		System.out.println(id);
-//		String id_ = request.getParameter("id");
-
-		Notice notice = service.get(Integer.parseInt(id));
-		model.addAttribute("notice", notice);
+		Notice notice = service.get(id);
+		model.addAttribute("n", notice);
 
 		return "customer.notice.detail";
 	}
