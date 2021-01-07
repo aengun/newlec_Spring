@@ -12,7 +12,7 @@ import com.newlecture.web.entity.NoticeView;
 // @Component // 구성요소 : 스프링 어플리케이션을 구성하는 구성요소 객체라는 의미.
 // @Component는 @Controller, @Service, @Repository로 대체할 수 있다.
 
-@Service
+@Service // IoC Container에 담아서 객체화한다.
 public class NoticeService {
 	
 	@Autowired
@@ -109,5 +109,13 @@ public class NoticeService {
 		// get -> set -> update();
 		return n.getId();
 	}
+
+	public List<NoticeView> getViewList(int page, int size, String field, String query) {
+		int startIndex = 1+(page-1)*size;//1, 11, 21, 31, ...
+		int endIndex = page*10;//10,20,30,40,50,60... 
+				
+		return noticeDao.getViewList(startIndex, endIndex, field, query);
+	}
+
 	
 }

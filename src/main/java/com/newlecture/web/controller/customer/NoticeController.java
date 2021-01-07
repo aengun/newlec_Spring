@@ -7,8 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.newlecture.web.entity.Notice;
+import com.newlecture.web.entity.NoticeView;
 import com.newlecture.web.service.NoticeService;
 
 // @Controller 대신 @Component로 써도 된다!
@@ -36,16 +38,17 @@ public class NoticeController {
 
 	// NoticeService service = new NoticeService();
 
-	// service를 Ioc Container에 담기 >> Ioc Container에서 NoticeService를 참조할 수 있는 것이 있으면
+	// service를 IoC Container에 담기 >> Ioc Container에서 NoticeService를 참조할 수 있는 것이 있으면
 	// 알아서 연결
 	// setter함수 사용도 안함, 생성자도 필요없이 알아서 연결됨. >> @Component를 가져옴
-	@Autowired
+	@Autowired // IoC Container에서 NoticeService를 참조하는 것이 있으면 여기에 연결하게됨(setter도 필요없음) 
 	private NoticeService service; // NoticeService는 @Service로
 
 	@RequestMapping("list")
-	public String list(Model model) {
-
-		List<Notice> list = service.getList(1, 10, "title", "");
+	public String list(@RequestParam(name = "p", defaultValue = "1") Integer page, Model model) {
+		//Integer을 쓰면 null 처리 안해도 됨
+//		List<Notice> list = service.getList(1, 10, "title", "");
+		List<NoticeView> list = service.getViewList(page, 10, "title", "");
 
 		model.addAttribute("list", list);
 

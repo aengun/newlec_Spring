@@ -3,36 +3,35 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.apache.ibatis.submitted.rounding.Mapper">
-   <resultMap type="org.apache.ibatis.submitted.rounding.User" id="usermap">
-      <id column="id" property="id"/>
-      <result column="name" property="name"/>
-      <result column="funkyNumber" property="funkyNumber"/>
-      <result column="roundingMode" property="roundingMode"/>
-   </resultMap>
+<mapper namespace="com.newlecture.web.dao.NoticeDao">
 
-   <select id="getUser" resultMap="usermap">
-      select * from users
-   </select>
-   <insert id="insert">
-       insert into users (id, name, funkyNumber, roundingMode) values (
-          #{id}, #{name}, #{funkyNumber}, #{roundingMode}
-       )
-   </insert>
+	<resultMap id="noticeMap"
+		type="com.newlecture.web.entity.Notice">
+		<result column="WRITER_ID" property="writerId" />
+	</resultMap>
 
-   <resultMap type="org.apache.ibatis.submitted.rounding.User" id="usermap2">
-      <id column="id" property="id"/>
-      <result column="name" property="name"/>
-      <result column="funkyNumber" property="funkyNumber"/>
-      <result column="roundingMode" property="roundingMode" typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
-   </resultMap>
-   <select id="getUser2" resultMap="usermap2">
-      select * from users2
-   </select>
-   <insert id="insert2">
-       insert into users2 (id, name, funkyNumber, roundingMode) values (
-          #{id}, #{name}, #{funkyNumber}, #{roundingMode, typeHandler=org.apache.ibatis.type.EnumTypeHandler}
-       )
-   </insert>
+	<resultMap id="noticeViewMap"
+		type="com.newlecture.web.entity.NoticeView">
+		<result column="WRITER_ID" property="writerId" />
+		<result column="WRITER_NAME" property="writerName" />
+		<result column="CMT_COUNT" property="cmtCount" />
+	</resultMap>
+
+	<!-- <select id="getList" resultType="com.newlecture.web.entity.Notice"> 
+		select * from NOTICE </select> -->
+
+	<select id="getList" resultMap="noticeMap">
+		select * from NOTICE
+	</select>
+
+	<select id="getViewList" resultMap="noticeViewMap">
+		SELECT * FROM (
+			SELECT ROWNUM NUM, N.* FROM (
+				SELECT * FROM NOTICE_VIEW
+				ORDER BY REGDATE DESC
+				) N
+			)
+		WHERE NUM BETWEEN #{param1} AND #{param2}
+	</select>
 
 </mapper>

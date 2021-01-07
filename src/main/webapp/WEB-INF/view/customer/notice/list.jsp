@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 		<main class="main">
 			<h2 class="main title">공지사항</h2>
 			
@@ -47,10 +48,10 @@
 					<c:forEach var="n" items="${list}">
 					<tr>
 						<td>${n.id}</td>
-						<td class="title indent text-align-left"><a href="${n.id}">${n.title}</a></td>
-						<td>${n.writerId }</td>
+						<td class="title indent text-align-left"><a href="${n.id}">${n.title}</a>[${n.cmtCount}]</td>
+						<td>${n.writerId}</td>
 						<td>
-							${n.regdate }	
+							<fmt:formatDate value="${n.regdate}" pattern="yyyy-MM-dd"/>	
 						</td>
 						<td>${n.hit }</td>
 					</tr>
@@ -75,8 +76,9 @@
 		
 	</div>
 	<ul class="-list- center">
-		<li><a class="-text- orange bold" href="?p=1&t=&q=" >1</a></li>
-				
+	<c:forEach var="i" begin="0" end="4" varStatus="st">
+		<li><a class="-text- orange bold" href="?p=${i+1}&t=&q=">${i+1}</a></li>
+	</c:forEach>			
 	</ul>
 	<div>
 		
