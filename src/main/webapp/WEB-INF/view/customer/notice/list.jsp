@@ -64,7 +64,7 @@
 			
 			<div class="indexer margin-top align-right">
 				<h3 class="hidden">현재 페이지</h3>
-				<div><span class="text-orange text-strong">1</span> / 1 pages</div>
+				<div><span class="text-orange text-strong">1</span> / 1 ${count }pages</div>
 			</div>
 
 			<div class="margin-top align-center pager">	

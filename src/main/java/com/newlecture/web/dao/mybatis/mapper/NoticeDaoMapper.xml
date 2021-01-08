@@ -20,18 +20,37 @@
 	<!-- <select id="getList" resultType="com.newlecture.web.entity.Notice"> 
 		select * from NOTICE </select> -->
 
-	<select id="getList" resultMap="noticeMap">
-		select * from NOTICE
-	</select>
-
 	<select id="getViewList" resultMap="noticeViewMap">
 		SELECT * FROM (
 			SELECT ROWNUM NUM, N.* FROM (
 				SELECT * FROM NOTICE_VIEW
+				<if test="param3 != null">  <!-- 동적 SQL -->
+					WHERE ${param3} LIKE '%${param4}%'
+				</if>
 				ORDER BY REGDATE DESC
 				) N
 			)
 		WHERE NUM BETWEEN #{param1} AND #{param2}
+	</select>
+	
+	<select id="getList" resultMap="noticeMap">
+		SELECT * FROM (
+			SELECT ROWNUM NUM, N.* FROM (
+				SELECT * FROM NOTICE
+				WHERE #{param3} LIKE '%${param4}%'
+				ORDER BY REGDATE DESC
+				) N
+			)
+		WHERE NUM BETWEEN #{param1} AND #{param2}
+	</select>
+	
+	<select id="getCount" resultType="int">
+		SELECT COUNT(ID) COUNT FROM NOTICE
+		<where>
+			<if test="param1 != null">
+				${param1} LIKE '%${param2}%'
+			</if>
+		</where>
 	</select>
 
 </mapper>
