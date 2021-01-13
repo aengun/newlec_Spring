@@ -3,19 +3,32 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.newlecture.web.dao.NoticeDao">   
-   
-   <select id="getViewList" resultType="com.newlecture.web.entity.NoticeView">
-      SELECT * FROM Notice
-   </select>
-   
-   <select id="getList" resultType="com.newlecture.web.entity.Notice">
-      SELECT * FROM Notice
-   </select>
-   
-   <select id="getCount" resultType="int">
-      SELECT count(id) FROM Notice
-   </select>
+<mapper namespace="com.newlecture.web.dao.NoticeDao">
+
+	<select id="getViewList" resultType="com.newlecture.web.entity.NoticeView">
+		select * from NoticeView
+		<if test="param3 != null">
+			where BINARY ${param3} like '%${param4}%'
+		</if>
+		order by regdate desc
+		limit #{param2} offset #{param1}
+	</select>
+
+	<select id="getList" resultType="com.newlecture.web.entity.Notice">
+		select * from Notice
+		<if test="param3 != null">
+			where BINARY ${param3} like '%${param4}%'
+		</if>
+		order by regdate desc
+		limit #{param2} offset #{param1}
+	</select>
+
+	<select id="getCount" resultType="int">
+		SELECT count(id) FROM Notice
+		<if test="param1 != null">
+			where BINARY ${param1} like '%${param2}%'
+		</if>
+	</select>
 
 </mapper>
 

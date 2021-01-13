@@ -53,14 +53,14 @@ public class MyBatisNoticeDao implements NoticeDao {
 //		NoticeDao mapper = session.getMapper(NoticeDao.class);
 		return mapper.getList();
 	}
-
+	
 	@Override
-	public List<Notice> getList(int startIndex, int endIndex, String field, String query) {
+	public List<Notice> getList(int offset) {
 		return null;
 	}
 
 	@Override
-	public List<Notice> getList(int startIndex) {
+	public List<Notice> getList(int offset, int size, String field, String query) {
 		return null;
 	}
 
@@ -74,14 +74,14 @@ public class MyBatisNoticeDao implements NoticeDao {
 	}
 
 	@Override
-	public List<NoticeView> getViewList(int startIndex, int endIndex) {
-		return mapper.getViewList(startIndex, endIndex, "title", "");
+	public List<NoticeView> getViewList(int offset, int size) {
+		return mapper.getViewList(offset, size, "title", "");
 	}
 
 	//이것만 구현할 수 있으면 되는 것일 뿐..
 	@Override
-	public List<NoticeView> getViewList(int startIndex, int endIndex, String field, String query) {
-		return mapper.getViewList(startIndex, endIndex, field, query);
+	public List<NoticeView> getViewList(int offset, int size, String field, String query) {
+		return mapper.getViewList(offset, size, field, query);
 	}
 
 	@Override

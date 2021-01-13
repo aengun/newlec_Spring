@@ -45,8 +45,9 @@
 				<label class="hidden">검색분류</label> <select name="f">
 					<option value="title">제목</option>
 					<option value="writerId">작성자</option>
-				</select> <label class="hidden">검색어</label> <input type="text" name="q"
-					value="" /> <input class="btn btn-search" type="submit" value="검색" />
+				</select> <label class="hidden">검색어</label> 
+				<input type="text" name="q" value="${param.q}" /> 
+				<input class="btn btn-search" type="submit" value="검색" />
 			</fieldset>
 		</form>
 	</div>
@@ -91,9 +92,12 @@
 	<div class="margin-top align-center pager">
 
 		<div>
-
+			<c:if test="${startNum > 1}">
+			<a class="btn btn-prev" href="?p=${startNum-5}&f=${param.f}&q=${param.q}">이전</a> 
+			</c:if>
+			<c:if test="${startNum == 1}">
 			<span class="btn btn-prev" onclick="alert('이전 페이지가 없습니다.');">이전</span>
-
+			</c:if>
 		</div>
 		
 		<ul class="-list- center">
@@ -102,13 +106,19 @@
 				<c:if test="${i+startNum == page}">
 					<c:set var="current" value="orange bold" />
 				</c:if>
-				<li><a class="-text- ${current}" href="?p=${i+startNum}&t=&q=">${i+startNum}</a></li>
+				<c:if test="${i+startNum <= pageCount}">
+				<li><a class="-text- ${current}" href="?p=${i+startNum}&f=${param.f}&q=${param.q}">${i+startNum}</a></li>
+				</c:if>
 			</c:forEach>
 		</ul>
 		
 		<div>
-			<a class="btn btn-next" href="?p=6&t=&q=">다음</a> 
+			<c:if test="${startNum + 5 <= pageCount}">
+			<a class="btn btn-next" href="?p=${5+startNum}&f=${param.f}&q=${param.q}">${i+startNum}">다음</a> 
+			</c:if>
+			<c:if test="${startNum + 5 > pageCount}">
 			<span class="btn btn-next" onclick="alert('다음 페이지가 없습니다.');">다음</span>
+			</c:if>
 		</div>
 
 	</div>

@@ -111,10 +111,12 @@ public class NoticeServiceImp implements NoticeService{
 	}
 
 	public List<NoticeView> getViewList(int page, int size, String field, String query) {
-		int startIndex = 1+(page-1)*size;//1, 11, 21, 31, ...
-		int endIndex = page*10;//10,20,30,40,50,60... 
+//		int startIndex = 1+(page-1)*size;//1, 11, 21, 31, ...
+//		int endIndex = page*10;//10,20,30,40,50,60... 
+		
+		int offset = (page-1) * 10; // page 1 -> 0, 2 -> 10, 3 -> 20
 				
-		return noticeDao.getViewList(startIndex, endIndex, field, query);
+		return noticeDao.getViewList(offset, size, field, query);
 	}
 
 	@Override

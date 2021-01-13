@@ -26,13 +26,23 @@ public interface NoticeDao {
 //	@Select("SELECT * FROM NOTICE")
 //	@Result(property = "writerId", column = "WRITER_ID")
 //	@Result(property = "regDate", column = "REG_DATE")
-	List<Notice> getList();
 	
-	List<Notice> getList(int startIndex, int endIndex, String field, String query);
-	List<Notice> getList(int startIndex);
+//	List<Notice> getList();	
+//	List<Notice> getList(int startIndex);
+//	List<Notice> getList(int startIndex, int endIndex, String field, String query);
+	// mysql사용을 위해 인터페이스 인자 변경
+	List<Notice> getList();	
+	List<Notice> getList(int offset);
+	List<Notice> getList(int offset, int size, String field, String query);
+	
+//	List<NoticeView> getViewList();
+//	List<NoticeView> getViewList(int startIndex, int endIndex);
+//	List<NoticeView> getViewList(int startIndex, int endIndex, String field, String query);
+	// mysql사용을 위해 인터페이스 인자 변경
 	List<NoticeView> getViewList();
-	List<NoticeView> getViewList(int startIndex, int endIndex);
-	List<NoticeView> getViewList(int startIndex, int endIndex, String field, String query);
+	List<NoticeView> getViewList(int offset, int size);
+	List<NoticeView> getViewList(int offset, int size, String field, String query);
+	
 	int getCount(String field, String query);
 	Notice getLast();
 }

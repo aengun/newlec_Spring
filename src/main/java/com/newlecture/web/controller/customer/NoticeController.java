@@ -46,13 +46,16 @@ public class NoticeController {
 
 	@RequestMapping("list")
 	public String list(@RequestParam(name = "p", defaultValue = "1") int page // Integer을 쓰면 null 처리 안해도 됨
-			, @RequestParam(name = "f", required = false /* , defaultValue = "title" */) String field,
-			@RequestParam(name = "q", required = false /* , defaultValue = "" */) String query, Model model) {
+			, @RequestParam(name = "f" /*, required = false*/ , defaultValue = "title" ) String field,
+			@RequestParam(name = "q"/* , required = false */  , defaultValue = "" ) String query, Model model) {
 
 //		List<Notice> list = service.getList(1, 10, "title", "");
 		List<NoticeView> list = service.getViewList(page, 10, field, query);
+		
+		for(NoticeView n : list)
+	         n.setTitle(n.getTitle().replace(query, "<span style=\"color:red;\">"+query+"</span>"));
+		
 		int count = service.getCount(field, query);
-
 		model.addAttribute("list", list);
 
 //		model.addAttribute("count", count);
