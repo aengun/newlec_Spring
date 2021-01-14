@@ -123,3 +123,5 @@
 
 	</div>
 </main>
+
+<script src="/js/customer/notice/list.js"></script>
