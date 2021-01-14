@@ -124,5 +124,15 @@ public class NoticeServiceImp implements NoticeService{
 		return noticeDao.getCount(field, query);
 	}
 
+	@Override
+	public Notice getPrev(int id) {
+		return noticeDao.getPrev(id);
+	}
+
+	@Override
+	public Notice getNext(int id) {
+		return noticeDao.getNext(id);
+	}
+
 	
 }

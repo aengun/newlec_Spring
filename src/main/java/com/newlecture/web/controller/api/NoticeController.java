@@ -14,7 +14,7 @@ import com.newlecture.web.service.NoticeService;
 // 문자열을 전달해야함
 
 @RestController("apiNoticeController")
-@RequestMapping("/api/notice")
+@RequestMapping("/api/notice/")
 public class NoticeController {
 
 	@Autowired

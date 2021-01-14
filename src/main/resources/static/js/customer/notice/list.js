@@ -19,8 +19,8 @@ window.addEventListener("load", (e) => {
 		request.send();*/
 		
 		// promise로 변경
-		fetch("/api/notice/list")
-		.then(response => response.);
+		// fetch("/api/notice/list")
+		// .then(response => response.);
 		
 	});
 	

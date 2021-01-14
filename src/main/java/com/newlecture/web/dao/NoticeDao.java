@@ -45,4 +45,6 @@ public interface NoticeDao {
 	
 	int getCount(String field, String query);
 	Notice getLast();
+	Notice getPrev(int id);
+	Notice getNext(int id);
 }

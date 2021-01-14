@@ -94,4 +94,14 @@ public class MyBatisNoticeDao implements NoticeDao {
 		return mapper.getCount(field, query);
 	}
 
+	@Override
+	public Notice getPrev(int id) {
+		return mapper.getPrev(id);
+	}
+
+	@Override
+	public Notice getNext(int id) {
+		return mapper.getNext(id);
+	}
+
 }

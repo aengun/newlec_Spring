@@ -88,13 +88,19 @@ public class NoticeController {
 //	}
 
 	// 2번 방법 : id를 자동으로 가져옴
+	// /customer/notice/7
 	@RequestMapping("{id}")
 //	public String detail(Model model, @PathVariable String id) {
-	public String detail(@PathVariable("id") Integer id, Model model) {
-
+	public String detail(@PathVariable("id") int id, Model model) {
+		
 		Notice notice = service.get(id);
+		Notice prev = service.getPrev(id);
+		Notice next = service.getNext(id);
+		
 		model.addAttribute("n", notice);
-
+		model.addAttribute("prev", prev);
+		model.addAttribute("next", next);
+		
 		return "customer.notice.detail";
 	}
 

@@ -19,6 +19,8 @@ public interface NoticeService {
    int delete(int id);
    int getLastId();
    int getCount(String field, String query);
+   Notice getPrev(int id);
+   Notice getNext(int id);
    
 }
 

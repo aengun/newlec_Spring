@@ -29,7 +29,27 @@
 			where BINARY ${param1} like '%${param2}%'
 		</if>
 	</select>
+	
+	<select id="get" resultType="com.newlecture.web.entity.Notice">
+		select * from Notice
+		where id = ${id}
+	</select>
 
+
+	<select id="getPrev" resultType="com.newlecture.web.entity.Notice">
+		select * from Notice
+		where regdate &lt; (select regdate from Notice where id = #{id})
+		order by regdate desc
+		limit 1;
+	</select>
+
+	<select id="getNext" resultType="com.newlecture.web.entity.Notice">
+		select * from Notice
+		where regdate &gt; (select regdate from Notice where id = #{id})
+		order by regdate asc
+		limit 1;
+	</select>
+	
 </mapper>
 
 <!-- <?xml version="1.0" encoding="UTF-8"?>
