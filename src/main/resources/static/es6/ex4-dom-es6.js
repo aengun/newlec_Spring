@@ -110,21 +110,40 @@ window.addEventListener("load", (e) => {
 			ModalBox.alert("파일 형식이 아닙니다.")
 		}
 
-		console.log("drop : " + e.dataTransfer);
-		
+		// console.log("drop : " + e.dataTransfer);
+		console.log(e.dataTransfer.files[0].name);
+
 		let url = "/upload";
-		
 		let fd = new FormData();
-		fd.append("file", e.dataTransfer.files[0].name);
+		fd.append("file", e.dataTransfer.files[0]);
+		fd.append("title", "제목1");
 
 		let request = new XMLHttpRequest();
-		
-		request.addEventListener("load", () => {
+
+		// 파일이 로드되는 동안의 상태(upload)를 알기 위한 progress 이벤트 사용
+		// Binary Data 담을 때  이벤트 발생 = > 버퍼가 비워질 때마다 발생.
+		request.upload.addEventListener("progress", (e) => { //진척 정도
+			console.log(`total : ${e.total}, loaded : ${e.loaded}`);
+
+			if (e.lengthComputable) // 계산할 수 있을 때
+				dropZone.firstElementChild.innerText = "진척도 : " + Math.round(e.loaded / e.total * 100) + "%";
+			else
+				dropZone.firstElementChild.innerText = "전송크기를 계산할 수 없습니다.";
 
 		});
-		
-		request.addEventListener("error", () => {
 
+		request.addEventListener("load", (e) => {
+			// console.log(e);
+			console.log(e.target.responseText);
+			// 업로드 완료되면 스타일을 원래로 되돌리기
+			CSS.set(dropZone, {
+				background: "#e9e9e9",
+				borderRadius: "20px"
+			});
+		});
+
+		request.addEventListener("error", (reason) => {
+			console.log(reason);
 		});
 
 		request.open("POST", url);
