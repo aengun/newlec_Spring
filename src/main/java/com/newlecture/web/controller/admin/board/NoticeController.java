@@ -14,17 +14,17 @@ public class NoticeController {
 	// /admin/board/notice/list 이렇게 하지 않아도 됨
 	@RequestMapping("/list")
 	public String list() {
-		return "list.jsp";
+		return "admin.board.notice.list";
 	}
 
 	@RequestMapping("/reg")
 	public String reg() {
-		return "reg";
+		return "admin.board.notice.reg";
 	}
 
 	@RequestMapping("/edit")
 	public String edit() {
-		return "edit";
+		return "admin.board.notice.edit";
 	}
 
 }
