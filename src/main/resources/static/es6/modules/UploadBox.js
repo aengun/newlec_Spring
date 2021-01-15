@@ -1,21 +1,24 @@
-/*class UploadBox{
-	
-	#section;
+import CSS from './modules/CSS.js';
+
+class UploadBox {
+
 	#dropZone;
-	
-	constructor(section, dropZone){
-		if (typeof section == "string")
-            this.#sectoin = document.querySelector(section);
-        else
-            this.#section = section;
+
+	constructor(dropZone) {
 
 		if (typeof dropZone == "string")
-            this.#dropZone = document.querySelector(dropZone);
-        else
-            this.#dropZone = dropZone;
+			this.#dropZone = document.querySelector(dropZone);
+		else
+			this.#dropZone = dropZone;
+
+		this.#dropZone.addEventListener("drop", this.dropHandler.bind(this));
+		this.#dropZone.addEventListener("dragover", this.dragoverHandler.bind(this));
+		this.#dropZone.addEventListener("dragenter", this.dragenterHandler.bind(this));
+		this.#dropZone.addEventListener("dragleave", this.dragleaveHandler.bind(this));
+
 	}
 
-	dropZone.addEventListener("drop", (e) => {
+	#dropHandler(e) {
 		e.preventDefault();
 		e.stopPropagation();
 
@@ -40,15 +43,15 @@
 			console.log(`total : ${e.total}, loaded : ${e.loaded}`);
 
 			if (e.lengthComputable)
-				dropZone.firstElementChild.innerText = "진척도 : " + Math.round(e.loaded / e.total * 100) + "%";
+				this.#dropZone.firstElementChild.innerText = "진척도 : " + Math.round(e.loaded / e.total * 100) + "%";
 			else
-				dropZone.firstElementChild.innerText = "전송크기를 계산할 수 없습니다.";
+				this.#dropZone.firstElementChild.innerText = "전송크기를 계산할 수 없습니다.";
 
 		});
 
 		request.addEventListener("load", (e) => {
 			console.log(e.target.responseText);
-			CSS.set(dropZone, {
+			CSS.set(this.#dropZone, {
 				background: "#e9e9e9",
 				borderRadius: "20px"
 			});
@@ -60,9 +63,9 @@
 
 		request.open("POST", url);
 		request.send(fd);
-	});
+	};
 
-	dropZone.addEventListener("dragover", (e) => {
+	#dragoverHandler(e) {
 		e.preventDefault();
 		e.stopPropagation();
 
@@ -72,38 +75,38 @@
 
 		let message = valid ? "드롭하세요" : "유효한 파일이 아닙니다.";
 
-		dropZone.firstElementChild.innerText = message;
+		this.#dropZone.firstElementChild.innerText = message;
 
 		console.log("dragover : " + e.dataTransfer);
-	});
+	};
 
-	dropZone.addEventListener("dragenter", (e) => {
+	#dragenterHandler(e) {
 		e.preventDefault();
 		e.stopPropagation();
 
-		CSS.set(dropZone, {
+		CSS.set(this.#dropZone, {
 			background: "pink",
 			borderRadius: "0px"
 		})
 
 		console.log("enter : " + e.dataTransfer);
-	});
+	};
 
-	dropZone.addEventListener("dragleave", (e) => {
+	#dragleaveHandler(e) {
 		e.preventDefault();
 		e.stopPropagation();
 
-		CSS.set(dropZone, {
+		CSS.set(this.#dropZone, {
 			background: "#e9e9e9",
 			borderRadius: "20px"
 		});
 
-		dropZone.firstElementChild.innerText = "업로드할 파일을 드래그 드롭하세요!";
+		this.#dropZone.firstElementChild.innerText = "업로드할 파일을 드래그 드롭하세요!";
 
 
 		console.log("exit");
-	});
+	};
 
 }
 
-export default UploadBox*/
+export default UploadBox

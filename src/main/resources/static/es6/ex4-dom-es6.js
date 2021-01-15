@@ -92,10 +92,10 @@ window.addEventListener("load", (e) => {
 
 // ==================================================
 
-import CSS from './modules/CSS.js';
+import UploadBox from './UploadBox.js';
 
 window.addEventListener("load", (e) => {
-	let section = document.querySelector("#s3");
+	/*let section = document.querySelector("#s3");
 	let dropZone = section.querySelector(".drop-zone");
 
 	dropZone.addEventListener("drop", (e) => {
@@ -195,5 +195,8 @@ window.addEventListener("load", (e) => {
 
 
 		console.log("exit");
-	});
+	});*/
+	
+	let uploadBox = new UploadBox("#s3 .drop-zone");
+	
 });
