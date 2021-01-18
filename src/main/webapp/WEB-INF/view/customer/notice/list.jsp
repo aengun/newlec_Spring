@@ -20,11 +20,11 @@
 		startNum = page-offset; -->
 <c:set var = "offset" value = "${(page-1)%5}" />
 <c:set var = "startNum" value="${page-offset}" />
-<div>
+<%-- <div>
 	offset : ${offset}<br>
 	startNum : ${startNum}
 </div>
-
+ --%>
 <main class="main">
 	<h2 class="main title">공지사항</h2>
 

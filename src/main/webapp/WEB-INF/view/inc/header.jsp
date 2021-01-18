@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="s" uri="http://www.springframework.org/security/tags" %>
 	<header id="header">
         
         <div class="content-container">
@@ -43,7 +44,12 @@
                         <h1 class="hidden">회원메뉴</h1>
                         <ul>
                             <li><a href="/index.html">HOME</a></li>
-                            <li><a href="/member/login.html">로그인</a></li>
+                            <s:authorize access="isAnonymous()">
+                            <li><a href="/member/login">로그인</a></li>
+                            </s:authorize>
+                            <s:authorize access="isAuthenticated()">
+                            <li><a href="/member/logout">로그아웃</a></li>
+                            </s:authorize>
                             <li><a href="/member/agree.html">회원가입</a></li>
                         </ul>
                     </nav>

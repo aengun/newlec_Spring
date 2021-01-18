@@ -12,6 +12,16 @@
 	    <put-attribute name="main" value="/WEB-INF/view/{1}/{2}.jsp" />
 	    <put-attribute name="footer" value="/WEB-INF/view/inc/footer.jsp" />
   	</definition>
+  	
+  	<definition name="home.*" template="/WEB-INF/view/inc/layout.jsp">
+	    <put-attribute name="title" value="Tiles tutorial homepage" />
+	    <put-attribute name="header" value="/WEB-INF/view/inc/header.jsp" />
+	    <put-attribute name="visual" value="/WEB-INF/view/inc/visual.jsp" />
+	    <put-attribute name="aside" value="/WEB-INF/view/inc/aside.jsp" />
+	    <put-attribute name="main" value="/WEB-INF/view/{1}.jsp" />
+	    <put-attribute name="footer" value="/WEB-INF/view/inc/footer.jsp" />
+  	</definition>
+  	
     <definition name="admin.*.*.*" template="/WEB-INF/view/admin/inc/layout.jsp">
 	    <put-attribute name="title" value="Tiles tutorial homepage" />
 	    <put-attribute name="header" value="/WEB-INF/view/inc/header.jsp" />

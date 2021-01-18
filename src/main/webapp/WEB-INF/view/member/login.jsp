@@ -14,7 +14,7 @@
         
                 <div class="margin-top first">
                     <h3 class="hidden">로그인 정보 입력</h3>
-                    <form class="login-form" method="post">
+                    <form class="login-form" action="login" method="post">
                         <fieldset>
                             <legend class="hidden">로그인 폼</legend>
                             <h4>
@@ -31,7 +31,7 @@
                             
                             <div class="login-btn-box">
                                 <input type="hidden" name="" value="" />
-                                <input type="submit" class="btn login-btn"/>
+                                <input type="submit" style="width:100px;" class="btn login-btn"/>
                             </div>
                             <ul class="login-option">
                                 <li>
