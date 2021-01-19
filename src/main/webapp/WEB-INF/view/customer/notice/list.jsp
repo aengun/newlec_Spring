@@ -80,6 +80,15 @@
 						</td>
 						<td>${n.hit }</td>
 					</tr>
+					
+					<%-- <tr>
+						<td colspan="6">
+							<c:forEach var="cmt" items="${n.comments}">
+								${cmt.title}
+							</c:forEach>
+						</td>
+					</tr> --%>
+
 				</c:forEach>
 
 

@@ -1,12 +1,19 @@
 package com.newlecture.web.config;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	@Autowired
+	private DataSource dataSource;
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception { 
@@ -26,7 +33,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 		.authorizeRequests()
 			.antMatchers("/member/login", "/member/join").permitAll() // 어떤 사용자도 들어갈 수 있는 곳
-			.antMatchers("/member/**").authenticated()
+			.antMatchers("/member/**").hasAnyRole("MEMBER","TEACHER","ADMIN") //.authenticated()
+			.antMatchers("/teacher/**").hasAnyRole("TEACHER","ADMIN")
 			.antMatchers("/admin/**").hasAnyRole("ADMIN")
 			.and()
 		.formLogin()
@@ -49,16 +57,40 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// 데이터
 //		auth.ldapAuthentication(); // ldab프로토콜을 이용한 사용자 정보 -> 일반적으로 윈도우 서버에서 사용
 //		auth.jdbcAuthentication(); // db 이용한 사용자 정보
-		auth
-			.inMemoryAuthentication() // 메모리 상에 있는 사용자 정보
-				.withUser("newlec")
-					.password("{noop}111")
-					.roles("ADMIN","MEMBER")
-				.and()
-				.withUser("dragon")
-					.password("111")
-					.roles("MEMBER");
-			
+		
+//		auth
+//			.inMemoryAuthentication() // 메모리 상에 있는 사용자 정보
+//				.withUser("newlec")
+//					.password("{noop}111")
+//					.roles("ADMIN","MEMBER")
+//				.and()
+//				.withUser("dragon")
+//					.password("111")
+//					.roles("MEMBER");
+		
+		
+		//db를 이용한 계정 사용
+//		auth
+//			.jdbcAuthentication()
+//			.dataSource(dataSource)
+//			.usersByUsernameQuery("select uid id, pwd password, 1 enabled from Member where uid=?")
+//			.authoritiesByUsernameQuery("select uid id, 'ROLE_ADMIN' roleId from Member where uid = ?")
+//			.passwordEncoder(new BCryptPasswordEncoder());
+		
+	      auth
+	         .jdbcAuthentication()
+	         .dataSource(dataSource)
+	         .usersByUsernameQuery("select uid id, pwd password, 1 enabled from Member where uid=?")
+	         .authoritiesByUsernameQuery("select m.uid id, r.name roldId "
+	               + "from Member m "
+	               + "   join MemberRole mr on m.id = mr.memberId "
+	               + " join Role r on r.id = mr.roleId where uid=?")
+	         .passwordEncoder(new BCryptPasswordEncoder());
+		
+		// 양방향
+		// 원문 -> encoding -> 전달 -> decoding -> 원문
+		// 단방향
+		// 원문 -> encoding -> 지문,전달 -> decoding(x) -> 원문	
 	}
 
 }

@@ -18,6 +18,12 @@ public class NoticeServiceImp implements NoticeService{
 	@Autowired
 	private NoticeDao noticeDao; //SpringNoticeDao는 @Repository로
 	
+//	@Autowired
+//	private CategoryDao categoryDao;
+//	
+//	@Autowired
+//	private CommentDao commentDao;
+	
 	public NoticeServiceImp() {
 //		noticeDao = new JdbcNoticeDao();
 	}
@@ -28,6 +34,12 @@ public class NoticeServiceImp implements NoticeService{
 		int endIndex = page*10;//10,20,30,40,50,60... 
 		
 		// [*제목][ 하하 ] [검색]
+		
+//		List<Notice> list = noticeDao.getList();
+//		
+//		for(Notice n: list)
+//			n.setComments(commentDao.getListByNoticeId(n.Id()));
+			
 		
 //		return noticeDao.getList(startIndex, endIndex, field, query);
 		return noticeDao.getList();
@@ -115,6 +127,11 @@ public class NoticeServiceImp implements NoticeService{
 //		int endIndex = page*10;//10,20,30,40,50,60... 
 		
 		int offset = (page-1) * 10; // page 1 -> 0, 2 -> 10, 3 -> 20
+		
+//		List<Notice> list = noticeDao.getList();
+//		
+//		for(Notice n: list)
+//			n.setComments(commentDao.getListByNoticeId(n.Id()));
 				
 		return noticeDao.getViewList(offset, size, field, query);
 	}
