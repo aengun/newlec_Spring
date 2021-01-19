@@ -11,6 +11,7 @@ public class MemberController {
 	public String login() {
 		
 		return "home.member.login";
+		
 	}
 	
 }

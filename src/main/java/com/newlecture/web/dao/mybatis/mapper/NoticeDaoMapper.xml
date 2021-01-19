@@ -4,7 +4,7 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.newlecture.web.dao.NoticeDao">
-
+<!-- namespace에 interface지정 -->
 	<select id="getViewList" resultType="com.newlecture.web.entity.NoticeView">
 		select * from NoticeView
 		<if test="param3 != null">
@@ -74,7 +74,7 @@
 	<select id="getList" resultType="com.newlecture.web.entity.Notice"> 
 		select * from NOTICE </select>
 
-	<select id="getViewList" resultMap="noticeViewMap">
+	<select id="getViewList" resultMap="noticeViewMap">   // #{} : 값, ${} : 키
 		SELECT * FROM (
 			SELECT ROWNUM NUM, N.* FROM (
 				SELECT * FROM NOTICE_VIEW
