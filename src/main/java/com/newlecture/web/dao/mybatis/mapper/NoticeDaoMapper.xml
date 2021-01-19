@@ -35,7 +35,6 @@
 		where id = ${id}
 	</select>
 
-
 	<select id="getPrev" resultType="com.newlecture.web.entity.Notice">
 		select * from Notice
 		where regdate &lt; (select regdate from Notice where id = #{id})

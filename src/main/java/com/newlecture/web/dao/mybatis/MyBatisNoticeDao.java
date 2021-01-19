@@ -14,7 +14,7 @@ import com.newlecture.web.entity.NoticeView;
 public class MyBatisNoticeDao implements NoticeDao {
 
 //	@Autowired
-	private SqlSession session;
+//	private SqlSession session;
 
 	private NoticeDao mapper;
 
@@ -24,7 +24,7 @@ public class MyBatisNoticeDao implements NoticeDao {
 		// 2. 담아둔 객체를 MybatisDao가 가져다 씀
 		// 이 때(가져다 쓸 때) 사용되는 도구 : session 도구 : getMapper(매퍼 객체 내놔!)
 		// sqlSession : IoC Container에 담겨있음..(autowired)
-		this.session = session;
+//		this.session = session;
 		mapper = session.getMapper(NoticeDao.class);
 	}
 
