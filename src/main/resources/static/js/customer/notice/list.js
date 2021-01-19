@@ -1,78 +1,91 @@
-window.addEventListener("load", (e) => {
-	const pager = document.querySelector(".pager");
-	const notice = document.querySelector(".notice");
-	const tbody = notice.querySelector("tbody");
-	const searchForm = document.querySelector(".search-form");
-	const searchButton = searchForm.querySelector(".btn-search");
-	const queryInput = searchForm.querySelector("input[name=q]");
+// ReactDOM.render("test", document.querySelector("#root"));
+// react의 강점 : 컴포넌트
+
+/*function Clock(props){
+	//const element = (
+	//	<section>
+	//		<h1>America/Toronto</h1>
+	//		<div>It is {new Date().toLocaleString("en-US", { timeZone: "America/Toronto" })}</div>
+	//	</section>
+	//); //컴포넌트
 	
-	searchButton.addEventListener = ("click", (e) => {
+	//return element;
+	
+	let time = new Date().toLocaleString(props.locale, {timeZone:props.timeZone});
+	
+	// 리턴문 하나로 해결하기.. 따옴표 붙이는거 아님! 객체를 리턴
+	return <section>
+		   	<h1>{props.timeZone}</h1>
+		   	<div>It is {time}</div>
+		   </section>;
+}*/
+
+class Clock extends React.Component{
+	
+	//constructor(props){
+	//	super(props); // props는 반드시 super로 전달해야함
+	//}
+	
+	constructor(props){ //화면 뜨기 전 초기화 하는 곳
+		super(props);
+		let time = new Date().toLocaleString(this.props.locale, {timeZone:this.props.timeZone});
+		let timeZone = props.timeZone;
 		
-		let page = e.target.innerText;
-		let query = queryInput.value;
-		let field = "title";
+		this.state = {time, timeZone};
+	}
+	
+	tick(){
+		let time = new Date().toLocaleString(this.props.locale, {timeZone:this.props.timeZone});
+		let timeZone = this.props.timeZone;
 		
-		fetch(`/api/notice/list?p=${page}&f=${field}&q=${query}`)
-			.then(response => response.json())
-			.then(json => {
-				tbody.innerHTML = "";
-				for (let n of json) {
-					let tr = `
-					<tr>
-						<td>${n.id}</td>
-						<td class="title indent text-align-left"><a href="${n.id}">${n.title}</a>[${n.cmtCount}]</td>
-						<td>${n.writerId}</td>
-						<td>${n.regdate}</td>
-						<td>${n.hit}</td>
-					</tr>`;
-					tbody.insertAdjacentHTML("beforeend", tr);
-				}
-			});
-			
-	});
+		this.setState({time,timeZone});
+	}
+	
+	componentDidMount(){ //화면 뜬 후 초기화 하는 곳
+		//interval을 줘도 마운트는 한 번만 된다는 것을 알 수 있다.
+		//console.log(this.state.timeZone + "did mount");
+		setInterval(()=>{this.tick()}, 1000);
+	}
+	
+	componentWillUnmount(){
+		//console.log(this.state.timeZone + "will unmount");
+	}
+	
+	render(){
+		// let time = new Date().toLocaleString(this.props.locale, {timeZone:this.props.timeZone});
+		return <section>
+			   	<h1>{this.state.timeZone}</h1>
+			   	<div>It is {this.state.time}</div>
+			   </section>;
+	}
+	
+}
 
-	pager.addEventListener("click", (e) => {
-		e.preventDefault();
+function tick() {
+	ReactDOM.render(
+		<section>
+			<h1>세계시간</h1>
+			<Clock timeZone="Asia/Seoul" locale="ko-KR"/>
+			<hr/>
+			<Clock timeZone="America/Toronto" locale="en-US"/>
+		</section>
+		, document.querySelector("#root"));
+}
 
-		console.log(e.target.innerText);
+/*function tick() {
+	ReactDOM.render(
+		<section>
+			<section>
+				<h1>America/Toronto</h1>
+				<div>It is {new Date().toLocaleString("en-US", { timeZone: "America/Toronto" })}</div>
+			</section>
+			<section>
+				<h1>Asia/Seoul</h1>
+				<div>It is {new Date().toLocaleString("ko-KR", { timeZone: "Asia/Seoul" })}</div>
+			</section>
+		</section>
+		, document.querySelector("#root"));
+}*/
 
-		// 기존방법 : callback 활용
-		/*let request = new XMLHttpRequest();
-		
-		request.addEventListener("load", (e) => {
-		
-			console.log(e.target.responseText);
-
-		});
-		
-		request.open("GET", "/api/notice/list");
-		request.send();*/
-
-
-		let page = e.target.innerText;
-		let query = queryInput.value;
-		let field = "title";
-		
-		// promise로 변경(JSON을 대신할 수 있다.)
-		fetch(`/api/notice/list?p=${page}&f=${field}&q=${query}`)
-			.then(response => response.json())
-			.then(json => {
-				// console.log(json[0].title);
-				tbody.innerHTML = "";
-				for (let n of json) {
-					let tr = `
-					<tr>
-						<td>${n.id}</td>
-						<td class="title indent text-align-left"><a href="${n.id}">${n.title}</a>[${n.cmtCount}]</td>
-						<td>${n.writerId}</td>
-						<td>${n.regdate}</td>
-						<td>${n.hit}</td>
-					</tr>`;
-					// console.log(tr);
-					tbody.insertAdjacentHTML("beforeend", tr);
-				}
-			});
-
-	});
-
-});
+tick();
+//setInterval(tick, 1000);
