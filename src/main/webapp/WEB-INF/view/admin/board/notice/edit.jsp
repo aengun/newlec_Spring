@@ -20,7 +20,7 @@
                                 <tr>
                                     <th>제목</th>
                                     <td class="text-align-left text-indent text-strong text-orange" colspan="3">
-                                        <input type="text" name="title" />
+                                        <input type="text" name="title" value="${n.title}"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -29,7 +29,7 @@
                                             name="file" /> </td>
                                 </tr>
                                 <tr class="content">
-                                    <td colspan="4"><textarea class="content" name="content"></textarea></td>
+                                    <td colspan="4"><textarea class="content" name="content">${n.content}</textarea></td>
                                 </tr>
                                 <tr>
                                     <td colspan="4" class="text-align-right"><input class="vertical-align" type="checkbox" id="open" name="open" value="true"><label for="open" class="margin-left">바로공개</label> </td>
@@ -38,8 +38,9 @@
                         </table>
                     </div>
                     <div class="margin-top text-align-center">
+                    	<input type="hidden" name="id" value="${n.id}"/>
                         <input class="btn-text btn-default" type="submit" value="저장" />
-                        <a class="btn-text btn-cancel" href="list.html">취소</a>
+                        <a class="btn-text btn-cancel" href="list">취소</a>
                     </div>
                 </form>
 

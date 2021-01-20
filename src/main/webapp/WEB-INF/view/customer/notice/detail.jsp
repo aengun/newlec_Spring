@@ -27,7 +27,7 @@
 								</tr>
 								<tr>
 									<th>작성자</th>
-									<td>${n.writerId }</td>
+									<td>${n.writerId}</td>
 									<th>조회수</th>
 									<td>${n.hit }</td>
 								</tr>
@@ -36,7 +36,7 @@
 									<td colspan="3"></td>
 								</tr>
 								<tr class="content">
-									<td colspan="4">${n.content }</td>
+									<td colspan="4">${n.content}</td>
 								</tr>
 							</tbody>
 						</table>

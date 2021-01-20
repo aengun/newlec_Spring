@@ -3,16 +3,17 @@ package com.newlecture.web.entity;
 import java.util.Date;
 
 public class Notice {
-	
-    private int id;
-    private String title;
-    private String writerId;
-    private String content;
-    private Date regdate;
-    private int hit;
-    private String files;
-    
-    public Notice() {
+
+	private int id;
+	private String title;
+	private String writerId;
+	private String content;
+	private Date regdate;
+	private int hit;
+	private String files;
+	private boolean pub;
+
+	public Notice() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -30,7 +31,7 @@ public class Notice {
 	// insert 용 생성자 오버로드
 	public Notice(String title, String content) {
 		this.title = title;
-		this.content = content;		 
+		this.content = content;
 	}
 
 	public int getId() {
@@ -89,12 +90,18 @@ public class Notice {
 		this.files = files;
 	}
 
+	public boolean getPub() {
+		return pub;
+	}
+
+	public void setPub(boolean pub) {
+		this.pub = pub;
+	}
+
 	@Override
 	public String toString() {
 		return "Notice [id=" + id + ", title=" + title + ", writerId=" + writerId + ", content=" + content
 				+ ", regdate=" + regdate + ", hit=" + hit + ", files=" + files + "]";
 	}
 
-    
-    
 }

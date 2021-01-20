@@ -53,6 +53,18 @@
 	    insert into Notice(title, content, writerId)
 	    values(#{title}, #{content}, #{writerId});
    	</insert>
+   	
+   	<update id="update">
+   		update Notice
+   		set
+	   		title = #{title},
+	   		writerId = #{writerId},
+	   		content = #{content},
+	   		hit = #{hit},
+	   		files = #{files},
+	   		pub = #{pub}
+   		where `id` = #{id}
+   	</update>
 	
 </mapper>
 
