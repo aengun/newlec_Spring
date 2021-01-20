@@ -1,91 +1,93 @@
-// ReactDOM.render("test", document.querySelector("#root"));
-// react의 강점 : 컴포넌트
+class NoticeList extends React.Component {
 
-/*function Clock(props){
-	//const element = (
-	//	<section>
-	//		<h1>America/Toronto</h1>
-	//		<div>It is {new Date().toLocaleString("en-US", { timeZone: "America/Toronto" })}</div>
-	//	</section>
-	//); //컴포넌트
-	
-	//return element;
-	
-	let time = new Date().toLocaleString(props.locale, {timeZone:props.timeZone});
-	
-	// 리턴문 하나로 해결하기.. 따옴표 붙이는거 아님! 객체를 리턴
-	return <section>
-		   	<h1>{props.timeZone}</h1>
-		   	<div>It is {time}</div>
-		   </section>;
-}*/
+	constructor() {
+		super();
+	}
 
-class Clock extends React.Component{
-	
-	//constructor(props){
-	//	super(props); // props는 반드시 super로 전달해야함
-	//}
-	
-	constructor(props){ //화면 뜨기 전 초기화 하는 곳
-		super(props);
-		let time = new Date().toLocaleString(this.props.locale, {timeZone:this.props.timeZone});
-		let timeZone = props.timeZone;
-		
-		this.state = {time, timeZone};
+	render() {
+		return <main class="main">
+			<h2 class="main title">공지사항</h2>
+
+			<div class="breadcrumb">
+				<h3 class="hidden">경로</h3>
+				<ul>
+					<li>home</li>
+					<li>고객센터</li>
+					<li>공지사항</li>
+				</ul>
+			</div>
+
+			<div class="search-form margin-top first align-right">
+				<h3 class="hidden">공지사항 검색폼</h3>
+				<form class="table-form">
+					<fieldset>
+						<legend class="hidden">공지사항 검색 필드</legend>
+						<label class="hidden">검색분류</label>
+						<select name="f">
+							<option value="title">제목</option>
+							<option value="writerId">작성자</option>
+						</select>
+						<label class="hidden">검색어</label>
+						<input type="text" name="q" value="" />
+						<input class="btn btn-search" type="submit" value="검색" />
+					</fieldset>
+				</form>
+			</div>
+
+			<div class="notice margin-top">
+				<h3 class="hidden">공지사항 목록</h3>
+				<table class="table">
+					<thead>
+						<tr>
+							<th class="w60">번호</th>
+							<th class="expand">제목</th>
+							<th class="w100">작성자</th>
+							<th class="w100">작성일</th>
+							<th class="w60">조회수</th>
+						</tr>
+					</thead>
+					<tbody>
+
+						<tr>
+							<td></td>
+							<td class="title indent text-align-left"><a href=""></a></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="indexer margin-top align-right">
+				<h3 class="hidden">현재 페이지</h3>
+				<div>
+					<span class="text-orange text-strong"></span> / pages
+			</div>
+			</div>
+
+			<div class="margin-top align-center pager">
+
+				<div>
+					<a class="btn btn-prev" href="?p=&f=&q=">이전</a>
+					<span class="btn btn-prev" onclick="alert('이전 페이지가 없습니다.');">이전</span>
+				</div>
+
+				<ul class="-list- center">
+					<li><a class="-text-" href="?p=&f=&q="></a></li>
+				</ul>
+
+				<div>
+					<a class="btn btn-next" href="?p=&f=&q=">다음</a>
+					<span class="btn btn-next" onclick="alert('다음 페이지가 없습니다.');">다음</span>
+				</div>
+
+			</div>
+		</main>
 	}
-	
-	tick(){
-		let time = new Date().toLocaleString(this.props.locale, {timeZone:this.props.timeZone});
-		let timeZone = this.props.timeZone;
-		
-		this.setState({time,timeZone});
-	}
-	
-	componentDidMount(){ //화면 뜬 후 초기화 하는 곳
-		//interval을 줘도 마운트는 한 번만 된다는 것을 알 수 있다.
-		//console.log(this.state.timeZone + "did mount");
-		setInterval(()=>{this.tick()}, 1000);
-	}
-	
-	componentWillUnmount(){
-		//console.log(this.state.timeZone + "will unmount");
-	}
-	
-	render(){
-		// let time = new Date().toLocaleString(this.props.locale, {timeZone:this.props.timeZone});
-		return <section>
-			   	<h1>{this.state.timeZone}</h1>
-			   	<div>It is {this.state.time}</div>
-			   </section>;
-	}
-	
 }
 
-function tick() {
-	ReactDOM.render(
-		<section>
-			<h1>세계시간</h1>
-			<Clock timeZone="Asia/Seoul" locale="ko-KR"/>
-			<hr/>
-			<Clock timeZone="America/Toronto" locale="en-US"/>
-		</section>
-		, document.querySelector("#root"));
-}
-
-/*function tick() {
-	ReactDOM.render(
-		<section>
-			<section>
-				<h1>America/Toronto</h1>
-				<div>It is {new Date().toLocaleString("en-US", { timeZone: "America/Toronto" })}</div>
-			</section>
-			<section>
-				<h1>Asia/Seoul</h1>
-				<div>It is {new Date().toLocaleString("ko-KR", { timeZone: "Asia/Seoul" })}</div>
-			</section>
-		</section>
-		, document.querySelector("#root"));
-}*/
-
-tick();
-//setInterval(tick, 1000);
+ReactDOM.render(
+	<NoticeList />,
+	document.querySelector("#main")
+);
