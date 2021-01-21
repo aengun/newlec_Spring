@@ -99,5 +99,24 @@ public class NoticeController {
 
 		return "redirect:../" + notice.getId(); // notice/123/edit => notice/123
 	}
+	
+	@GetMapping("{id}/del")
+	public String del(@PathVariable("id") int id) {
+		System.out.println(id);
+		service.delete(id);
+
+		return "redirect:../list";
+	}
+	
+	@PostMapping("aa")
+	public String aa(String action, int[] del) {
+		
+		if(action.equals("일괄삭제"))
+			service.deleteAll(del);
+		
+		
+		return "redirect:list";
+	}
+	
 
 }

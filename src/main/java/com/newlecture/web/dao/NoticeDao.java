@@ -47,4 +47,5 @@ public interface NoticeDao {
 	Notice getLast();
 	Notice getPrev(int id);
 	Notice getNext(int id);
+	int deleteAll(int[] ids);
 }

@@ -108,4 +108,9 @@ public class MyBatisNoticeDao implements NoticeDao {
 		return mapper.getNext(id);
 	}
 
+	@Override
+	public int deleteAll(int[] ids) {
+		return mapper.deleteAll(ids);
+	}
+
 }

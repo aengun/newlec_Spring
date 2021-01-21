@@ -65,6 +65,19 @@
 	   		pub = #{pub}
    		where `id` = #{id}
    	</update>
+   	
+   	<delete id="delete">
+   		delete from Notice where id=#{id}
+   	</delete>
+   	
+   	<delete id="deleteAll">
+   		delete from Notice
+   		where id in
+   		<foreach item="id" index="index" collection="ids"
+   			open="(" separator="," close=")">
+   			#{id}
+   		</foreach>
+   	</delete>
 	
 </mapper>
 

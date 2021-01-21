@@ -56,11 +56,14 @@ public class NoticeServiceImp implements NoticeService{
 		// DELETE NOTICE WHERE ID IN (......);
 		//noticeDao.deleteAll(ids);
 		
-		int result = 0;
-		for(int i=0; i<ids.length; i++) {
-			int id = ids[i];
-			result += noticeDao.delete(id);
-		}
+//		int result = 0;
+//		for(int i=0; i<ids.length; i++) {
+//			int id = ids[i];
+//			result += noticeDao.delete(id);
+//		}
+		
+		//새로운 방법
+		int result = noticeDao.deleteAll(ids);
 		
 		return result;
 	}

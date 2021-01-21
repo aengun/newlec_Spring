@@ -28,70 +28,70 @@
 		</form>
 	</div>
 
-	<div class="notice margin-top">
-		<h3 class="hidden">공지사항 목록</h3>
-		<table class="table">
-			<thead>
-				<tr>
-					<th class="w60">번호</th>
-					<th class="expand">제목</th>
-					<th class="w100">작성자</th>
-					<th class="w100">작성일</th>
-					<th class="w60">조회수</th>
-					<th class="w40">공개</th>
-					<th class="w40">삭제</th>
-				</tr>
-			</thead>
-			<tbody>
-
-				<c:forEach var="n" items="${list }">
+	<form action="aa" method="post">
+		<div class="notice margin-top">
+			<h3 class="hidden">공지사항 목록</h3>
+			<table class="table">
+				<thead>
 					<tr>
-						<td>${n.id }</td>
-						<td class="title indent text-align-left"><a
-							href="${n.id}">${n.title }</a></td>
-						<td>${n.writerId }</td>
-						<td>${n.regdate }</td>
-						<td>${n.hit }</td>
-						<td><input type="checkbox" name="open"></td>
-						<td><input type="checkbox" name="del"></td>
+						<th class="w60">번호</th>
+						<th class="expand">제목</th>
+						<th class="w100">작성자</th>
+						<th class="w100">작성일</th>
+						<th class="w60">조회수</th>
+						<th class="w40">공개</th>
+						<th class="w40">삭제</th>
 					</tr>
-				</c:forEach>
+				</thead>
+				<tbody>
 
-			</tbody>
-		</table>
-	</div>
+					<c:forEach var="n" items="${list }">
+						<tr>
+							<td>${n.id }</td>
+							<td class="title indent text-align-left"><a href="${n.id}">${n.title }</a></td>
+							<td>${n.writerId }</td>
+							<td>${n.regdate }</td>
+							<td>${n.hit }</td>
+							<td><input ${n.pub?"checked":""} type="checkbox" name="open"></td>
+							<td><input type="checkbox" name="del" value="${n.id}"></td>
+						</tr>
+					</c:forEach>
 
-	<div class="indexer margin-top align-right">
-		<h3 class="hidden">현재 페이지</h3>
-		<div>
-			<span class="text-orange text-strong">1</span> / 1 pages
-		</div>
-	</div>
-
-	<div class="text-align-right margin-top">
-		<input type="submit" class="btn-text btn-default" value="일괄공개">
-		<input type="submit" class="btn-text btn-default" value="일괄삭제">
-		<a class="btn-text btn-default" href="reg">글쓰기</a>
-	</div>
-
-	<div class="margin-top align-center pager">
-
-		<div>
-
-
-			<span class="btn btn-prev" onclick="alert('이전 페이지가 없습니다.');">이전</span>
-
-		</div>
-		<ul class="-list- center">
-			<li><a class="-text- orange bold" href="?p=1&t=&q=">1</a></li>
-
-		</ul>
-		<div>
-
-
-			<span class="btn btn-next" onclick="alert('다음 페이지가 없습니다.');">다음</span>
-
+				</tbody>
+			</table>
 		</div>
 
-	</div>
+		<div class="indexer margin-top align-right">
+			<h3 class="hidden">현재 페이지</h3>
+			<div>
+				<span class="text-orange text-strong">1</span> / 1 pages
+			</div>
+		</div>
+
+		<div class="text-align-right margin-top">
+			<input type="submit" class="btn-text btn-default" name="action"
+				value="일괄공개"> <input type="submit"
+				class="btn-text btn-default" name="action" value="일괄삭제"> <a
+				class="btn-text btn-default" href="reg">글쓰기</a>
+		</div>
+
+		<div class="margin-top align-center pager">
+
+			<div>
+
+				<span class="btn btn-prev" onclick="alert('이전 페이지가 없습니다.');">이전</span>
+
+			</div>
+			<ul class="-list- center">
+				<li><a class="-text- orange bold" href="?p=1&t=&q=">1</a></li>
+
+			</ul>
+			<div>
+
+				<span class="btn btn-next" onclick="alert('다음 페이지가 없습니다.');">다음</span>
+
+			</div>
+
+		</div>
+	</form>
 </main>
