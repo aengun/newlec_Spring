@@ -28,7 +28,7 @@
 		</form>
 	</div>
 
-	<form action="aa" method="post">
+	<form action="list" method="post">
 		<div class="notice margin-top">
 			<h3 class="hidden">공지사항 목록</h3>
 			<table class="table">
@@ -45,7 +45,7 @@
 				</thead>
 				<tbody>
 
-					<c:forEach var="n" items="${list }">
+					<c:forEach var="n" items="${list}">
 						<tr>
 							<td>${n.id }</td>
 							<td class="title indent text-align-left"><a href="${n.id}">${n.title }</a></td>
@@ -69,10 +69,11 @@
 		</div>
 
 		<div class="text-align-right margin-top">
-			<input type="submit" class="btn-text btn-default" name="action"
-				value="일괄공개"> <input type="submit"
-				class="btn-text btn-default" name="action" value="일괄삭제"> <a
-				class="btn-text btn-default" href="reg">글쓰기</a>
+			${pubStatus}
+			<input type="text" name="old-state" value='${pubStatus}' />
+			<input type="submit" class="btn-text btn-default" name="action" value="일괄공개" /> 
+			<input type="submit" class="btn-text btn-default" name="action" value="일괄삭제" /> 
+			<a class="btn-text btn-default" href="reg">글쓰기</a>
 		</div>
 
 		<div class="margin-top align-center pager">

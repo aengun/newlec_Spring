@@ -1,7 +1,10 @@
 package com.newlecture.web.controller.admin.board;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,7 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.google.gson.Gson;
 import com.newlecture.web.entity.Notice;
 import com.newlecture.web.entity.NoticeView;
 import com.newlecture.web.service.NoticeService;
@@ -27,13 +32,39 @@ public class NoticeController {
 	private NoticeService service;
 
 	// /admin/board/notice/list 이렇게 하지 않아도 됨
-	@RequestMapping("list")
+	@GetMapping("list")
 	public String list(Model model) {
 
 		List<NoticeView> list = service.getViewList(1, 10, "title", "");
 		model.addAttribute("list", list);
 
+		// [{"id" : 12345, "pub" : true},{...}, ...]
+		List<Map<String, Object>> pubState = new ArrayList<>();
+		for (NoticeView nv : list) {
+			Map<String, Object> state = new HashMap<>();
+			state.put("id", nv.getId());
+			state.put("pub", nv.getPub());
+			pubState.add(state);
+		}
+
+		String jsonState = new Gson().toJson(pubState);
+
+		model.addAttribute("pubStatus", jsonState);
+
 		return "admin.board.notice.list";
+	}
+
+	@PostMapping("list")
+	public String aa(String action, int[] del, @RequestParam("old-state") String oldState) {
+
+		if (action.equals("일괄삭제"))
+			service.deleteAll(del);
+		else if (action.equals("일괄공개")) {
+			List<Map<String, Boolean>> oldStateList = new Gson().fromJson(oldState, List.class);
+			System.out.println(oldStateList.get(0).get("id"));
+		}
+
+		return "redirect:list";
 	}
 
 	@RequestMapping("{id}")
@@ -99,7 +130,7 @@ public class NoticeController {
 
 		return "redirect:../" + notice.getId(); // notice/123/edit => notice/123
 	}
-	
+
 	@GetMapping("{id}/del")
 	public String del(@PathVariable("id") int id) {
 		System.out.println(id);
@@ -107,15 +138,5 @@ public class NoticeController {
 
 		return "redirect:../list";
 	}
-	
-	@PostMapping("aa")
-	public String aa(String action, int[] del) {
-		
-		if(action.equals("일괄삭제"))
-			service.deleteAll(del);
-		
-		return "redirect:list";
-	}
-	
 
 }
