@@ -114,7 +114,6 @@ public class NoticeController {
 		if(action.equals("일괄삭제"))
 			service.deleteAll(del);
 		
-		
 		return "redirect:list";
 	}
 	
