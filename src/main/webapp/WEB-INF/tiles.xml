@@ -22,7 +22,7 @@
 	    <put-attribute name="footer" value="/WEB-INF/view/inc/footer.jsp" />
   	</definition>
   	
-    <definition name="admin.*.*.*" template="/WEB-INF/view/admin/inc/layout.jsp">
+    <definition name="admin.*.*.*" template="/WEB-INF/view/admin/inc/layout.jsp" preparer="com.newlecture.web.config.AdminViewPreparer">
 	    <put-attribute name="title" value="Tiles tutorial homepage" />
 	    <put-attribute name="header" value="/WEB-INF/view/inc/header.jsp" />
 	    <put-attribute name="visual" value="/WEB-INF/view/admin/inc/visual.jsp" />
@@ -40,4 +40,4 @@
 	    <put-attribute name="footer" value="/WEB-INF/view/inc/footer.jsp" />
   	</definition>
   
-</tiles-definitions>
+</tiles-definitions> 

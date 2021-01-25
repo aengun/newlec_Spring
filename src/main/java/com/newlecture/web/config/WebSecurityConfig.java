@@ -3,6 +3,7 @@ package com.newlecture.web.config;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,6 +15,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	private DataSource dataSource;
+	
+//	@Autowired // 방법1 : 이렇게 하고 NewlecAuthenticationSuccessHandler에 @Component 달기 
+//	private NewlecAuthenticationSuccessHandler successHandler;
+	
+	// 방법2
+//	@Bean // Bean : 호출을 위한 것이 아님. 스프링에게 객체를 선납함.
+	public NewlecAuthenticationSuccessHandler successHandler() {
+		return new NewlecAuthenticationSuccessHandler();
+	}
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception { 
@@ -41,6 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.loginPage("/member/login")
 			.loginProcessingUrl("/member/login")
 			.defaultSuccessUrl("/")
+			.successHandler(successHandler())
 			.and()
 		.logout()
 			.logoutUrl("/member/logout")
