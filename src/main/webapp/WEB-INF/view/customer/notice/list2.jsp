@@ -93,10 +93,10 @@
 
 		<div>
 			<c:if test="${startNum > 1}">
-			<a class="btn btn-prev" href="?p=${startNum-5}&f=${param.f}&q=${param.q}">이전</a> 
+				<a class="btn btn-prev" href="?p=${startNum-5}&f=${param.f}&q=${param.q}">이전</a> 
 			</c:if>
 			<c:if test="${startNum == 1}">
-			<span class="btn btn-prev" onclick="alert('이전 페이지가 없습니다.');">이전</span>
+				<span class="btn btn-prev" onclick="alert('이전 페이지가 없습니다.');">이전</span>
 			</c:if>
 		</div>
 		
@@ -115,10 +115,10 @@
 		
 		<div>
 			<c:if test="${startNum + 5 <= pageCount}">
-			<a class="btn btn-next" href="?p=${5+startNum}&f=${param.f}&q=${param.q}">${i+startNum}">다음</a> 
+				<a class="btn btn-next" href="?p=${5+startNum}&f=${param.f}&q=${param.q}">${i+startNum}">다음</a> 
 			</c:if>
 			<c:if test="${startNum + 5 > pageCount}">
-			<span class="btn btn-next" onclick="alert('다음 페이지가 없습니다.');">다음</span>
+				<span class="btn btn-next" onclick="alert('다음 페이지가 없습니다.');">다음</span>
 			</c:if>
 		</div>
 

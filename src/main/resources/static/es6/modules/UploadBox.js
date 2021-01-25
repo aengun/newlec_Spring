@@ -1,4 +1,4 @@
-import CSS from './modules/CSS.js';
+import CSS from './CSS.js';
 
 class UploadBox {
 
@@ -11,10 +11,10 @@ class UploadBox {
 		else
 			this.#dropZone = dropZone;
 
-		this.#dropZone.addEventListener("drop", this.dropHandler.bind(this));
-		this.#dropZone.addEventListener("dragover", this.dragoverHandler.bind(this));
-		this.#dropZone.addEventListener("dragenter", this.dragenterHandler.bind(this));
-		this.#dropZone.addEventListener("dragleave", this.dragleaveHandler.bind(this));
+		this.#dropZone.addEventListener("drop", this.#dropHandler.bind(this));
+		this.#dropZone.addEventListener("dragover", this.#dragoverHandler.bind(this));
+		this.#dropZone.addEventListener("dragenter", this.#dragenterHandler.bind(this));
+		this.#dropZone.addEventListener("dragleave", this.#dragleaveHandler.bind(this));
 
 	}
 
