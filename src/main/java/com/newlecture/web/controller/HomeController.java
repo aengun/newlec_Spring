@@ -31,7 +31,7 @@ public class HomeController {
 		
 		String url = "/upload"; //저장경로 : 루트 > upload
 		//실제 저장경로 확인
-		String realPath = request.getServletContext().getRealPath(url);		
+		String realPath = request.getServletContext().getRealPath(url);
 		System.out.println(realPath);
 		
 		System.out.println("file uploaded");

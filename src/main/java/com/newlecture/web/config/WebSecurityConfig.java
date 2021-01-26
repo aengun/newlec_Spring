@@ -16,11 +16,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private DataSource dataSource;
 	
-//	@Autowired // 방법1 : 이렇게 하고 NewlecAuthenticationSuccessHandler에 @Component 달기 
+//	방법1 : 이렇게 하고 NewlecAuthenticationSuccessHandler에 @Component 달기 
+//	@Autowired 
 //	private NewlecAuthenticationSuccessHandler successHandler;
 	
-	// 방법2
-//	@Bean // Bean : 호출을 위한 것이 아님. 스프링에게 객체를 선납함.
+//	방법2 : @Bean 활용
+	@Bean // Bean : 호출을 위한 것이 아님. 스프링에게 객체를 선납함.
 	public NewlecAuthenticationSuccessHandler successHandler() {
 		return new NewlecAuthenticationSuccessHandler();
 	}

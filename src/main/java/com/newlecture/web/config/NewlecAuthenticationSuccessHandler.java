@@ -10,13 +10,18 @@ import javax.servlet.http.HttpSession;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.web.DefaultRedirectStrategy;
+import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.savedrequest.SavedRequest;
 
-
+//@Component
 public class NewlecAuthenticationSuccessHandler implements AuthenticationSuccessHandler{
 
 //	@Autowired
 //	private MemberService memberService;
+	
+	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -41,6 +46,16 @@ public class NewlecAuthenticationSuccessHandler implements AuthenticationSuccess
 			// 사용자 포인트 등을 업데이트
 			// memberService.dailyPointUpOfMember();
 			// memberService.updateLastLoginTime(..);
+			
+			SavedRequest savedRequest = (SavedRequest) session.getAttribute("SPRING_SECURITY_SAVED_REQUEST");
+			
+			if(savedRequest != null) {
+				String returnURL = savedRequest.getRedirectUrl();
+				redirectStrategy.sendRedirect(request, response, returnURL);
+			}
+			else {
+				
+			}
 			
 			// 역할별로 각자 자기 대시보드로 이동하기
 			// admin -> /admin/index
