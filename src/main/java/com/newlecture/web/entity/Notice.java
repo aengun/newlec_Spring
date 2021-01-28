@@ -28,6 +28,12 @@ public class Notice {
 		this.files = files;
 	}
 
+	public Notice(String title, String writerId, String content) {
+		this.title = title;
+		this.writerId = writerId;
+		this.content = content;
+	}
+
 	// insert 용 생성자 오버로드
 	public Notice(String title, String content) {
 		this.title = title;

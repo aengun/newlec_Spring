@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.newlecture.web.entity.Notice;
@@ -30,6 +31,19 @@ public class NoticeController {
 
 	@Autowired
 	private NoticeService service;
+	
+	@GetMapping("atom")
+	@ResponseBody
+	public String atom() {
+		
+		Notice notice = new Notice("아톰1","newlec","내용1");
+		
+		service.insert(null);
+		notice.setWriterId("존재없음");
+		service.insert(null);
+		
+		return "okay";
+	}
 
 	// /admin/board/notice/list 이렇게 하지 않아도 됨
 	@GetMapping("list")

@@ -2,6 +2,7 @@ package com.newlecture.web.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.Principal;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -50,7 +51,11 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/index")
-	public String index() {
+	public String index(Principal principal) {
+		
+		if(principal != null)
+			principal.getName();
+		
 		return "home.index";
 	}
 	
