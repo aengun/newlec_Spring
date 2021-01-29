@@ -93,7 +93,7 @@ public class NoticeServiceImp implements NoticeService {
 	public Notice get(int id) {
 		return noticeDao.get(id);
 	}
-
+   
 	public int insert(Notice notice) {
 		return noticeDao.insert(notice);
 	}
