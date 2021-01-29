@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.newlecture.web.dao.NoticeDao;
 import com.newlecture.web.entity.Notice;
@@ -13,84 +15,82 @@ import com.newlecture.web.entity.NoticeView;
 // @Component는 @Controller, @Service, @Repository로 대체할 수 있다.
 
 @Service // IoC Container에 담아서 객체화한다.
-public class NoticeServiceImp implements NoticeService{
-	
+public class NoticeServiceImp implements NoticeService {
+
 	@Autowired
-	private NoticeDao noticeDao; //SpringNoticeDao는 @Repository로
-	
+	private NoticeDao noticeDao; // SpringNoticeDao는 @Repository로
+
 //	@Autowired
 //	private CategoryDao categoryDao;
 //	
 //	@Autowired
 //	private CommentDao commentDao;
-	
+
 	public NoticeServiceImp() {
 //		noticeDao = new JdbcNoticeDao();
 	}
 
 	public List<Notice> getList(int page, int size, String field, String query) {
-		
-		int startIndex = 1+(page-1)*size;//1, 11, 21, 31, ...
-		int endIndex = page*10;//10,20,30,40,50,60... 
-		
+
+		int startIndex = 1 + (page - 1) * size;// 1, 11, 21, 31, ...
+		int endIndex = page * 10;// 10,20,30,40,50,60...
+
 		// [*제목][ 하하 ] [검색]
-		
+
 //		List<Notice> list = noticeDao.getList();
 //		
 //		for(Notice n: list)
 //			n.setComments(commentDao.getListByNoticeId(n.Id()));
-			
-		
+
 //		return noticeDao.getList(startIndex, endIndex, field, query);
 		return noticeDao.getList();
 	}
-	
+
 	public int deleteAll(int[] ids) {
-		
+
 		// Dao를 사용하는 이유
 		// 1. 협업
 		// 2. 재사용
 		// 3. 데이터(소스)를 숨기는 것
-		
-		
+
 		// DELETE NOTICE WHERE ID IN (......);
-		//noticeDao.deleteAll(ids);
-		
+		// noticeDao.deleteAll(ids);
+
 //		int result = 0;
 //		for(int i=0; i<ids.length; i++) {
 //			int id = ids[i];
 //			result += noticeDao.delete(id);
 //		}
-		
-		//새로운 방법
+
+		// 새로운 방법
 		int result = noticeDao.deleteAll(ids);
-		
+
 		return result;
 	}
-	
+
 	public int hitUp(int id) {
-		
-		//int result = noticeDao.hitUp(id);
-		
+
+		// int result = noticeDao.hitUp(id);
+
 		// SELECT * FROM NOTICE WHERE ID=?
-		Notice notice  = noticeDao.get(id); 
-		notice.setHit(notice.getHit()+1);
+		Notice notice = noticeDao.get(id);
+		notice.setHit(notice.getHit() + 1);
 		// UPDATE NOTICE SET ... WHERE ID=?
 		int result = noticeDao.update(notice);
-		
+
 		return result;
 	}
-	
+
 	public List<NoticeView> getViewList(int page, int size) {
-		
-		int startIndex = 1+(page-1)*size;//1, 11, 21, 31, ...
-		int endIndex = page*10;//10,20,30,40,50,60... 
-				
+
+		int startIndex = 1 + (page - 1) * size;// 1, 11, 21, 31, ...
+		int endIndex = page * 10;// 10,20,30,40,50,60...
+
 		return noticeDao.getViewList(startIndex, endIndex);
 	}
-	
+
+	@Transactional(isolation = Isolation.READ_UNCOMMITTED)
 	public Notice get(int id) {
-		
 		return noticeDao.get(id);
 	}
 
@@ -98,27 +98,25 @@ public class NoticeServiceImp implements NoticeService{
 		return noticeDao.insert(notice);
 	}
 
-
 	public int update(Notice notice) {
 		int result = 0;
-		
+
 		result = noticeDao.update(notice);
-		
+
 		return result;
 	}
-	
+
 	public int delete(int id) {
-		int result =0;
-		
+		int result = 0;
+
 		result = noticeDao.delete(id);
-		
-		
-		return result; 
+
+		return result;
 	}
 
 	public int getLastId() {
 		Notice n = noticeDao.getLast();
-		
+
 		// 업데이트 -> 컬럼
 		// 서비스에서는 공개값 업데이트/좋아요 업데이트/조회수 업데이트
 		// get -> set -> update();
@@ -128,14 +126,14 @@ public class NoticeServiceImp implements NoticeService{
 	public List<NoticeView> getViewList(int page, int size, String field, String query) {
 //		int startIndex = 1+(page-1)*size;//1, 11, 21, 31, ...
 //		int endIndex = page*10;//10,20,30,40,50,60... 
-		
-		int offset = (page-1) * 10; // page 1 -> 0, 2 -> 10, 3 -> 20
-		
+
+		int offset = (page - 1) * 10; // page 1 -> 0, 2 -> 10, 3 -> 20
+
 //		List<Notice> list = noticeDao.getList();
 //		
 //		for(Notice n: list)
 //			n.setComments(commentDao.getListByNoticeId(n.Id()));
-				
+
 		return noticeDao.getViewList(offset, size, field, query);
 	}
 
@@ -154,5 +152,17 @@ public class NoticeServiceImp implements NoticeService{
 		return noticeDao.getNext(id);
 	}
 
-	
+	@Override
+	@Transactional  //원자성을 보장한다.
+	public void atom() {
+
+		Notice notice = new Notice("미미쨩1", "newlec", "내용1");
+		noticeDao.insert(notice);
+
+		notice.setTitle("미미쨩2");
+		notice.setWriterId("존재없음");
+		noticeDao.insert(notice);
+
+	}
+
 }

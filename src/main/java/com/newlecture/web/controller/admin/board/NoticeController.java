@@ -32,18 +32,18 @@ public class NoticeController {
 	@Autowired
 	private NoticeService service;
 	
-	@GetMapping("atom")
-	@ResponseBody
-	public String atom() {
-		
-		Notice notice = new Notice("아톰1","newlec","내용1");
-		
-		service.insert(null);
-		notice.setWriterId("존재없음");
-		service.insert(null);
-		
-		return "okay";
-	}
+//	@GetMapping("atom")
+//	@ResponseBody
+//	public String atom() {
+//		
+//		Notice notice = new Notice("아톰1","newlec","내용1");
+//		
+//		service.insert(null);
+//		notice.setWriterId("존재없음");
+//		service.insert(null);
+//		
+//		return "okay";
+//	}
 
 	// /admin/board/notice/list 이렇게 하지 않아도 됨
 	@GetMapping("list")
