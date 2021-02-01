@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,7 @@ import com.newlecture.web.service.NoticeService;
 @Controller
 @RequestMapping("/customer/notice/")
 public class NoticeController {
-	
+
 //	@RequestMapping("/list") // 요청 : /customer/notice/list
 //	public String list() {
 ////		return "/WEB-INF/view/customer/notice/list.jsp";
@@ -45,37 +46,36 @@ public class NoticeController {
 	// setter함수 사용도 안함, 생성자도 필요없이 알아서 연결됨. >> @Component를 가져옴
 	@Autowired // IoC Container에서 NoticeService를 참조하는 것이 있으면 여기에 연결하게됨(setter도 필요없음)
 	private NoticeService service; // NoticeService는 @Service로
-	
-	
+
 	@GetMapping("isol")
 	@ResponseBody
 	public Notice isol() {
-		
+
 		Notice notice = service.get(92032809);
-		
+
 		return notice;
 	}
-	
+
 	@GetMapping("atom")
 	@ResponseBody
 	public String atom() {
-		
+
 		service.atom();
-		
+
 		return "okay";
 	}
 
 	@RequestMapping("list")
 	public String list(@RequestParam(name = "p", defaultValue = "1") int page // Integer을 쓰면 null 처리 안해도 됨
-			, @RequestParam(name = "f" /*, required = false*/ , defaultValue = "title" ) String field,
-			@RequestParam(name = "q"/* , required = false */ , defaultValue = "" ) String query, Model model) {
+			, @RequestParam(name = "f" /* , required = false */ , defaultValue = "title") String field,
+			@RequestParam(name = "q"/* , required = false */ , defaultValue = "") String query, Model model) {
 
 //		List<Notice> list = service.getList(1, 10, "title", "");
 		List<NoticeView> list = service.getViewList(page, 10, field, query);
-		
-		for(NoticeView n : list)
-	         n.setTitle(n.getTitle().replace(query, "<span style=\"color:red;\">"+query+"</span>"));
-		
+
+		for (NoticeView n : list)
+			n.setTitle(n.getTitle().replace(query, "<span style=\"color:red;\">" + query + "</span>"));
+
 		int count = service.getCount(field, query);
 		model.addAttribute("list", list);
 
@@ -113,15 +113,15 @@ public class NoticeController {
 	@RequestMapping("{id}")
 //	public String detail(Model model, @PathVariable String id) {
 	public String detail(@PathVariable("id") int id, Model model) {
-		
+
 		Notice notice = service.get(id);
 		Notice prev = service.getPrev(id);
 		Notice next = service.getNext(id);
-		
+
 		model.addAttribute("n", notice);
 		model.addAttribute("prev", prev);
 		model.addAttribute("next", next);
-		
+
 		return "customer.notice.detail";
 	}
 
