@@ -1,17 +1,24 @@
 package com.newlecture.web;
 
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @ControllerAdvice
-@EnableWebMvc
 public class ControllerException {
-
-	// 예외처리
-	@ExceptionHandler(Exception.class)
-	public String error(Exception e) {
-		return "error";
-	}
-
+   
+   @ExceptionHandler(IndexOutOfBoundsException.class)
+   @ResponseBody
+   public String bound(Exception e) {
+      
+      return "bound error";
+   }
+   
+   @ExceptionHandler(Exception.class)
+   public String error(Exception e, Model model) {
+      
+      model.addAttribute("message",e.getMessage());
+      return "error";
+   }
 }
